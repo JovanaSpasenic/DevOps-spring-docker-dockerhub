@@ -34,4 +34,5 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           rev=$(git rev-parse --short HEAD)
+          docker tag ecrtest jovanaspasenic/mynewdockercontainer 
           docker push jovanaspasenic/mynewdockercontainer:$rev

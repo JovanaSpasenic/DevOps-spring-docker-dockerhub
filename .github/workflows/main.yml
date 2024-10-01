@@ -1,10 +1,8 @@
 name: Publish Docker image
-
 on:
   push:
     branches:
       - main
-
 jobs:
   push_to_registry:
     name: Push Docker image to ECR
@@ -21,8 +19,8 @@ jobs:
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 244530008913.dkr.ecr.eu-west-1.amazonaws.com
           rev=$(git rev-parse --short HEAD)
           docker build . -t ecrtest:$rev
-          docker tag ecrtest:$rev 244530008913.dkr.ecr.eu-west-1.amazonaws.com/ecr_repo_name:$rev
-          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/ecr_repo_name:$rev
+          docker tag ecrtest 244530008913.dkr.ecr.eu-west-1.amazonaws.com/ecr_repo_name
+          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/ecr_repo_name
       
           
          # Log in to Docker Hub
@@ -33,6 +31,5 @@ jobs:
       # Push Docker image to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          rev=$(git rev-parse --short HEAD)
-          docker tag ecrtest:$rev jovanaspasenic/mynewdockercontainer:$rev 
-          docker push jovanaspasenic/mynewdockercontainer:$rev
+          docker tag ecrtest jovanaspasenic/mynewdockercontainer 
+          docker push jovanaspasenic/mynewdockercontainer
